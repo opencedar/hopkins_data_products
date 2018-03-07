@@ -39,7 +39,7 @@ coordinates_and_data <- merge(coordinates, lakedataRecent, by = "ALSC")
 
 require(leaflet)
 latlon <- coordinates_and_data[,2:3] 
-labels <- paste0(coordinates_and_data$popup, ", SO4 level = ", coordinates_and_data$SO4)
+labels <- paste0(coordinates_and_data$popup, ", SO4 level = ", coordinates_and_data$SO4, ", Date ", coordinates_and_data$confirmedDate)
 
 adkLakes <- leaflet() 
 latlon %>%
