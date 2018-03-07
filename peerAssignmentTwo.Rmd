@@ -1,0 +1,51 @@
+---
+title: "Acid Rain in the Adirondacks"
+author: "Andy Hasselwander"
+date: "March 7, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+
+```
+
+## Acid Rain in the Adirondacks
+Acid rain is creating when coal plants in the midwest release sulpher dioxide (SO2) and nitrogen oxides into the atmosphere, where it is converted into Sulphuric Acid. The Adirondack Long-Term Monitoring Program monitors these lakes for acid levels, as measured by pH. This map interactively displays the pH levels in monitored lakes. 
+
+###Load coordinates and data
+
+```{r}
+coordinates <- read.csv("LTM_Sample_Coordinates.csv")
+coordinates <- coordinates[complete.cases(coordinates),]
+colnames(coordinates) <- c("lat", "lng", "popup", "ALSC")
+lakedata <- read.csv("LakeData.csv")
+colnames(lakedata)[1] <- "confirmedDate"
+require(stringr)
+lakedata$ALSC <- str_sub(lakedata$ALSC,2, str_length(lakedata$ALSC))
+
+lakedata$confirmedDate <- as.Date(lakedata$confirmedDate, "%Y.%m.%d")
+```
+
+##Show Map of Lakes with Most Recent Acid Rain Data
+This simple map shows the lake name, with the size of the circle representing acid levels. This pulls the most recent data from September 2017.
+```{r}
+
+lakedataRecent <- lakedata[lakedata$confirmedDate == "2017-09-01",]
+
+coordinates_and_data <- merge(coordinates, lakedataRecent, by = "ALSC")
+
+require(leaflet)
+latlon <- coordinates_and_data[,2:3] 
+labels <- paste0(coordinates_and_data$popup, ", SO4 level = ", coordinates_and_data$SO4)
+
+adkLakes <- leaflet() 
+latlon %>%
+  leaflet() %>%
+  addTiles() %>%
+  addCircles(weight =1, popup=labels, radius = coordinates_and_data$SO4 * 500)
+
+
+```
