@@ -3,15 +3,16 @@ shinyUI(fluidPage(
   titlePanel("Acid Rain in the Adirondacks"),
   sidebarLayout(
     sidebarPanel(
-
-      selectInput("dateInput", "Select the Date", 
+     
+      selectInput("dateInput", "Measurement Date", 
                    choices = dateValues, multiple = FALSE),
-      selectInput("variableInput", "Select the Measurement",
+      selectInput("variableInput", "Measurement",
                   choices = measurementValues, multiple = FALSE)
     ),
     mainPanel(
-      h3("Map of Selected Data"),
-      leafletOutput("map1")
+      "Explore lake chemistry readings around the Adirondacks. The data were collected by the Adirondack Lakes Survey Corporation, and are available at www.adirondacklakesurvey.org.",
+      leafletOutput("map1"),
+      plotOutput("timeSeries1")
     )
   )
 ))

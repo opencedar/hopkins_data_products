@@ -30,7 +30,7 @@ lakedata$confirmedDate <- as.Date(lakedata$confirmedDate, "%Y.%m.%d")
 ```
 
 ##Show Map of Lakes with Most Recent Acid Rain Data
-This simple map shows the lake name, with the size of the circle representing pH levels. Red colors represent lower pH levels (more acidic.) This pulls the most recent data from September 2017. A future version will be interactive, allowing the user to select different collection dates and measurements.
+This simple map shows the lake name, with the color of the circle representing pH levels. Red colors represent lower pH levels (more acidic.) This pulls the most recent data from September 2017. A future version will be interactive, allowing the user to select different collection dates and measurements.
 ```{r}
 
 lakedataRecent <- lakedata[lakedata$confirmedDate == "2017-09-01",]
