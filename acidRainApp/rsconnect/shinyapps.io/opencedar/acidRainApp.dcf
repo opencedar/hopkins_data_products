@@ -1,0 +1,12 @@
+name: acidRainApp
+title: acidRainApp
+username:
+account: opencedar
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 295425
+bundleId: 1258120
+url: https://opencedar.shinyapps.io/acidRainApp/
+when: 1520471913.72073
+asMultiple: FALSE
+asStatic: FALSE
