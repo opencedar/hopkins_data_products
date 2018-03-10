@@ -11,9 +11,11 @@ lakedata <- read.csv("LakeData.csv")
 colnames(lakedata)[1] <- "confirmedDate"
 lakedata$ALSC <- str_sub(lakedata$ALSC,2, str_length(lakedata$ALSC))
 lakedata$confirmedDate <- as.Date(lakedata$confirmedDate, "%Y.%m.%d")
-dateValues <- base::unique(lakedata$confirmedDate)
+dateValues <- na.omit(base::unique(lakedata$confirmedDate, na.rm = TRUE))
+
 measurementValues <- colnames(lakedata)[8:ncol(lakedata)]
 coordinates_and_data <- merge(coordinates, lakedata, by = "ALSC")
+locationValues <- sort(base::unique(coordinates_and_data$popup))
 library(data.table)
 coord_data_dt <- data.table(coordinates_and_data)
 
@@ -55,21 +57,18 @@ fluidPage(
                              choices = dateValues, 
                              multiple = FALSE, 
                              selected = dateValues[length(dateValues)]),
-                 selectInput("location", 
+                 selectInput("locationInput", 
                              "Location", 
-                              choices = placeValues,
-                              choices = placeValues,
+                              choices = locationValues,
                               multiple = FALSE,
-                              selected = placeValues[1]),
+                              selected = locationValues[1]),
                  selectInput("variableInput", "Measurement",
                              choices = measurementValues, multiple = FALSE)
                  )
-               ),
+               ,
                mainPanel(
                  "Explore lake chemistry readings around the Adirondacks. The data were collected by the Adirondack Lakes Survey Corporation, and are available at www.adirondacklakesurvey.org.",
-                 h6("Andy Hasselwander, 2018"),
-                 leafletOutput("map1"),
-                 plotOutput("timeSeries2")
+                 h6("Andy Hasselwander, 2018")
                )
              )
              
@@ -77,5 +76,5 @@ fluidPage(
              
              
              )
-  )
+    )
 )
