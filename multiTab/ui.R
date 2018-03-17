@@ -52,7 +52,7 @@ fluidPage(
                              choices = dateValues, 
                              multiple = FALSE, 
                              selected = dateValues[1]),
-                 selectInput("variableInput", 
+                 selectInput("endDateInput", 
                              "End Date",
                              choices = dateValues, 
                              multiple = FALSE, 
@@ -62,13 +62,15 @@ fluidPage(
                               choices = locationValues,
                               multiple = FALSE,
                               selected = locationValues[1]),
-                 selectInput("variableInput", "Measurement",
+                 selectInput("variableInput2", "Measurement",
                              choices = measurementValues, multiple = FALSE)
                  )
                ,
                mainPanel(
                  "Explore lake chemistry readings around the Adirondacks. The data were collected by the Adirondack Lakes Survey Corporation, and are available at www.adirondacklakesurvey.org.",
-                 h6("Andy Hasselwander, 2018")
+                 h6("Andy Hasselwander, 2018"),
+                 plotOutput("timeSeries2"),
+                 textOutput("textOutput1")
                )
              )
              

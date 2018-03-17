@@ -63,4 +63,38 @@ shinyServer(function(input, output) {
     
   })
   
+
+  
+  output$timeSeries2 <- renderPlot({
+    
+    tsDF2 <- subset(coord_data_dt, 
+                    popup == input$locationInput & 
+                      confirmedDate >= input$startDateInput &
+                      confirmedDate <= input$endDateInput)
+    
+    ggplot(tsDF2, aes(confirmedDate, eval(parse(text = input$variableInput2)))) + geom_line() +
+      ylab(input$variableInput2) + 
+      geom_smooth(method='lm', na.rm=TRUE)
+    
+  })
+  
+
+  
+  output$textOutput1 <- renderText({
+    
+    tsDF2 <- subset(coord_data_dt, 
+                    popup == input$locationInput & 
+                      confirmedDate >= input$startDateInput &
+                      confirmedDate <= input$endDateInput)
+    
+    fit <- lm(eval(parse(text = input$variableInput2)) ~ confirmedDate, tsDF2)
+    changePerYear <- fit$coefficients[2] * 365.25
+    paste0("For this time period for this location, the selected metric is trending a ", 
+                               format(round(changePerYear, 4)), " change per year. The p-value 
+                              for the linear model fitting the variable to time is ", 
+           format(round(summary(fit)[4][[1]][2,4], 10)), ".")
+  })
+  
+  
+  
 })
