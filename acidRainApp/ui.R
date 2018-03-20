@@ -36,7 +36,10 @@ fluidPage(
                              selected = "LABPH")
                ),
                mainPanel(
-                 "Explore lake chemistry readings around the Adirondacks. The data were collected by the Adirondack Lakes Survey Corporation, and are available at www.adirondacklakesurvey.org.",
+                 "Explore lake chemistry readings around the Adirondacks. The data were collected by the Adirondack Lakes Survey Corporation, and are available at www.adirondacklakesurvey.org.
+                 There are two tabs. The first tab allows a user to explore every testing site in the park, and then drill into 
+                 chemistry readings for that lake on a given date. Adjust the reading and the date using the left nav. The plot shows a time
+                 series plot of that chemistry reading across the entire range of measurements, across all measurement sites.",
                  h6("Andy Hasselwander, 2018"),
                  leafletOutput("map1"),
                  plotOutput("timeSeries1")
@@ -69,7 +72,10 @@ fluidPage(
                )
                ,
                mainPanel(
-                 "Explore lake chemistry readings around the Adirondacks. The data were collected by the Adirondack Lakes Survey Corporation, and are available at www.adirondacklakesurvey.org.",
+                 "Explore lake chemistry readings around the Adirondacks. The data were collected by the Adirondack Lakes Survey Corporation, and are available at www.adirondacklakesurvey.org. 
+                 The second tab allows a user to explore one location in detail, within a date range. Change the location, start and end dates, and 
+                 measurement using the left nav. The plot fits a regression line vs. time and provides a p-value to determine the trend of the measurement
+                  through time.",
                  h6("Andy Hasselwander, 2018"),
                  plotOutput("timeSeries2"),
                  textOutput("textOutput1")

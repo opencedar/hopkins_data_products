@@ -35,7 +35,10 @@ fluidPage(
                              choices = measurementValues, multiple = FALSE)
                ),
                mainPanel(
-                 "Explore lake chemistry readings around the Adirondacks. The data were collected by the Adirondack Lakes Survey Corporation, and are available at www.adirondacklakesurvey.org.",
+                 "Explore lake chemistry readings around the Adirondacks. The data were collected by the Adirondack Lakes Survey Corporation, and are available at www.adirondacklakesurvey.org.
+                 There are two tabs. The first tab allows a user to explore every testing site in the park, and then drill into 
+                 chemistry readings for that lake on a given date. Adjust the reading and the date using the left nav. The plot shows a time
+                  series plot of that chemistry reading across the entire range of measurements, for that site.",
                  h6("Andy Hasselwander, 2018"),
                  leafletOutput("map1"),
                  plotOutput("timeSeries1")
