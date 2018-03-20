@@ -1,0 +1,68 @@
+Tracking Acid Rain via Lake Chemistry in the Adirondack Park
+========================================================
+author: Andy Hasselwander
+date: March 20th, 2018
+autosize: true
+
+Why Acid Rain is Important
+========================================================
+
+
+- According to the U.S. EPA, "Acid rain results when sulfur dioxide (SO2) and nitrogen oxides (NOX) are emitted into the atmosphere and transported by wind and air currents.  The SO2 and NOX react with water, oxygen and other chemicals to form sulfuric and nitric acids.  These then mix with water and other materials before falling to the ground."
+- When acid rain enters streams and lakes, the pH decreases, eventually killing plant and animal life
+- In the 1970s and 1980s, many lakes in the western Adirondack Park, previously havens for trout, newts, frogs, algae, and plants, were made almost completely sterile because of acid rain
+
+Loading the Data Collected by the Adirondack Lakes Survey Corporation (www.adirondacklakesurvey.org)
+===
+<small>
+```{r}
+library(stringr)
+coordinates <- read.csv("LTM_Sample_Coordinates.csv")
+coordinates <- coordinates[complete.cases(coordinates),]
+colnames(coordinates) <- c("lat", "lng", "popup", "ALSC")
+lakedata <- read.csv("LakeData.csv"); colnames(lakedata)[1] <- "confirmedDate"
+lakedata$ALSC <- str_sub(lakedata$ALSC,2, str_length(lakedata$ALSC))
+lakedata$confirmedDate <- as.Date(lakedata$confirmedDate, "%Y.%m.%d")
+dateValues <- base::unique(lakedata$confirmedDate)
+measurementValues <- colnames(lakedata)[8:ncol(lakedata)]
+coordinates_and_data <- merge(coordinates, lakedata, by = "ALSC")
+library(data.table); coord_data_dt <- data.table(coordinates_and_data)
+```
+</small>
+
+
+Over 40 Different Measurements are Available
+========================================================
+
+- pH is a very helpful measurement when it comes to acid rain. The lower the pH, the more acidic the lake. Neutral pH is 7.0
+
+<small>
+```{r}
+colnames(lakedata)[9:30]
+```
+</small>
+
+Average pH has increased over time in Adirondack Lakes
+===========
+
+
+```{r, echo=FALSE}
+library(ggplot2)
+tsDT <- data.frame(coord_data_dt[, mean(LABPH), by = confirmedDate])
+    ggplot(tsDT, aes(confirmedDate, V1)) + geom_line() +
+      ylab("pH for All Measurement Stations, Averaged") + 
+      geom_smooth(method='lm', na.rm=TRUE)
+
+```
+
+***
+
+- When looking at average pH over time, it is clear that efforts to reduce acid rain have been quite successful
+
+
+
+To Interact with the Data, Check Out the Interactive App
+====
+*Interactive Acid Rain App: https://opencedar.shinyapps.io/acidRainApp/*
+
+**Thank You!**
